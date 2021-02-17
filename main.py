@@ -29,11 +29,27 @@ def main():
     gs = GameState()
     loadimages()
     running = True
-
+    sqselected = ()
+    playerClicks = []
     while running:
+        print("save me " + "test charge")
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                location = pygame.mouse.get_pos()
+                col = location[0] // SQ_SIZE
+                row = location[1] // SQ_SIZE
+                if sqselected == (row,col):
+                    sqselected = ()
+                    playerClicks = []
+                else:
+                    sqselected = (row, col)
+                    playerClicks.append(sqselected)
+                if len(playerClicks) == 2:
+                    pass
+
 
         clock.tick(FPS)
         pygame.display.flip()
