@@ -40,8 +40,8 @@ class GameState():
                 self.blackKingLocation = (move.startRow, move.startCol)
 
     def getValidMoves(self):
-        return self.getAllPossibleMoves()
-
+        moves =  self.getAllPossibleMoves()
+        return moves
     def getAllPossibleMoves(self):
         move = []
         for r in range(len(self.board)):
