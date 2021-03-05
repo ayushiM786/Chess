@@ -27,30 +27,49 @@ def main():
     screen.fill((0,0,0))
     clock = pygame.time.Clock()
     gs = GameState()
+    validMoves = gs.getValidMoves()
+    moveMade = False #Flag
+
     loadimages()
     running = True
     sqselected = ()
     playerClicks = []
     while running:
-        print("save me " + "test charge")
+
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_z:
+                    gs.undoMove()
+                    moveMade = True
+
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 location = pygame.mouse.get_pos()
                 col = location[0] // SQ_SIZE
                 row = location[1] // SQ_SIZE
-                if sqselected == (row,col):
+                if sqselected == (row, col):
                     sqselected = ()
                     playerClicks = []
                 else:
                     sqselected = (row, col)
                     playerClicks.append(sqselected)
                 if len(playerClicks) == 2:
-                    pass
+                    move = Move(playerClicks[0], playerClicks[1], gs.board)
+                    print(move.getChessNotation())
+                    if move in validMoves:
+                        gs.makeMove(move)
+                        moveMade = True
+                        sqselected = ()
+                        playerClicks = []
+                    else:
+                        playerClicks = [sqselected]
 
-
+        if moveMade:
+            validMoves = gs.getValidMoves()
+            moveMade = False
         clock.tick(FPS)
         pygame.display.flip()
         drawGameState(screen,gs)
