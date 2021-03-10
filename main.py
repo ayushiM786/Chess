@@ -20,6 +20,26 @@ def loadimages():
         IMAGES[piece] = pygame.transform.scale(pygame.image.load(piece + ".png"), (SQ_SIZE,SQ_SIZE))
 
 
+def start_screen():
+    pygame.init()
+    screen = pygame.display.set_mode((Width, Height))
+    pygame.display.set_caption("Chess")
+    bg = pygame.transform.scale(pygame.image.load("bkg.png"),(512,512))
+    screen.blit(bg, (0,0))
+    clock = pygame.time.Clock()
+    running = True
+    while running:
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    main()
+        clock.tick(FPS)
+        pygame.display.flip()
+
 def main():
     pygame.init()
     screen = pygame.display.set_mode((Width,Height))
@@ -97,4 +117,5 @@ def drawPieces(screen, board):
 
 
 
-main()
+# main()
+start_screen()
