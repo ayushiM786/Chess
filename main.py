@@ -37,6 +37,7 @@ def start_screen():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_p:
                     main()
+                    running = False
         clock.tick(FPS)
         pygame.display.flip()
 
@@ -54,8 +55,10 @@ def main():
     running = True
     sqselected = ()
     playerClicks = []
-    while running:
 
+    while running:
+        if gs.inCheck():
+            print("Check")
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -90,6 +93,7 @@ def main():
         if moveMade:
             validMoves = gs.getValidMoves()
             moveMade = False
+
         clock.tick(FPS)
         pygame.display.flip()
         drawGameState(screen,gs)

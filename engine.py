@@ -19,11 +19,19 @@ class GameState():
         self.checkMate = False
         self.staleMate = False
 
+
+    def turn(self):
+        if self.whiteToMove:
+            print("White's turn")
+        else:
+            print("Black's Turn")
+
+
     def makeMove(self, move):
+        self.turn()
         self.board[move.startRow][move.startCol] = "--"
         self.board[move.endRow][move.endCol] = move.pieceMoved
         self.moveLog.append(move)
-        # print("White's turn: " + str(not self.whiteToMove))
         self.whiteToMove = not self.whiteToMove
         if move.pieceMoved == "wK":
             self.whiteKingLocation = (move.endRow, move.endCol)
@@ -81,6 +89,7 @@ class GameState():
 
     def getAllPossibleMoves(self):
         move = []
+
         for r in range(len(self.board)):
             for c in range(len(self.board[r])):
                 turn = self.board[r][c][0]
@@ -118,9 +127,12 @@ class GameState():
         else:
             if self.board[r + 1][c] == "--":
                 move.append(Move((r, c), (r + 1, c), self.board))
-                # print((r,c), (r-1,c))
+                # print(r)
                 if r == 1 and self.board[r + 2][c] == "--":
                     move.append(Move((r, c), (r + 2, c), self.board))
+                # if r == 6:
+                #     move.append(Move((r, c), (r + 1, c), self.board))
+
             if c - 1 >= 0:
                 if self.board[r + 1][c - 1][0] == "w":
                     move.append(Move((r, c), (r + 1, c - 1), self.board))
